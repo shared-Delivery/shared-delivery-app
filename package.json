@@ -1,0 +1,20 @@
+{
+  "name": "app-shared-delivery",
+  "version": "1.0.0",
+  "description": "This is an application that serves as logistical support to companies dedicated to the trade of products and services.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "lint": "eslint"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "nodemon": "^2.0.14",
+    "prettier": "^2.4.1"
+  }
+}
