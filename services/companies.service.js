@@ -1,59 +1,51 @@
-const faker = require('faker');
 const boom = require('@hapi/boom');
+const { models } = require('../libs/sequelize');
 
 class CompaniesServices {
   constructor() {
     this.companies = [];
-    this.generateCompanies();
+    // this.generateCompanies();
   }
 
-  generateCompanies() {
-    for (let index = 0; index < 6; index++) {
-      this.companies.push({
-        id: faker.datatype.uuid(),
-        name: faker.company.companyName().toUpperCase(),
-        address: faker.address.direction(),
-      });
-    }
-  }
+  // generateCompanies() {
+  //   for (let index = 0; index < 6; index++) {
+  //     this.companies.push({
+  //       id: faker.datatype.uuid(),
+  //       name: faker.company.companyName().toUpperCase(),
+  //       address: faker.address.direction(),
+  //     });
+  //   }
+  // }
 
-  returnCompanies() {
-    return this.companies;
+  async returnCompanies() {
+    const rta = await models.Company.findAll();
+    return rta;
   }
 
   async getCompaniesId(id) {
-    return this.companies.find((item) => item.id === id);
+    const company = await models.Company.findByPk(id);
+    if (!company) {
+      throw boom.notFound('user not found');
+    }
+    return company;
   }
 
   async deleteCompany(id) {
-    const index = this.companies.findIndex((item) => item.id === id);
-    if (index === -1) {
-      throw boom.notFound('Product not found');
-    }
-    return this.companies.splice(index, 1);
+    const user = await models.Company.findByPk(id);
+    await user.destroy();
+    return { id };
   }
 
   async createCompany(body) {
-    const newCompany = {
-      id: faker.datatype.uuid(),
-      ...body,
-    };
-    this.companies.push(newCompany);
-    return newCompany;
+    const newUser = await models.Company.create(body);
+    return newUser;
   }
 
   async update(id, body) {
-    const index = this.companies.findIndex((item) => item.id === id);
-    if (index === -1) {
-      throw boom.notFound('Product not found');
-    }
-    const company = this.companies[index];
-    this.companies[index] = {
-      ...company,
-      ...body,
-    };
-    return this.companies[index];
+    const user = await models.Company.findByPk(id);
+
+    user.update(body);
+    return user;
   }
 }
-
 module.exports = CompaniesServices;

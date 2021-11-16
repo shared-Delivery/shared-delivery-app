@@ -1,12 +1,12 @@
 const Joi = require('joi');
 
-const id = Joi.string().uuid();
+const id = Joi.string();
 const name = Joi.string().min(3).max(25);
 const address = Joi.string().min(10).max(25);
 
 const createCompanySchema = Joi.object({
   name: name.required(),
-  address: address.required(),
+  // address: address.required(),
 });
 
 const updateCompanySchema = Joi.object({
@@ -16,7 +16,7 @@ const updateCompanySchema = Joi.object({
 });
 
 const findCompanySchema = Joi.object({
-  id: id.required(),
+  id: id,
 });
 
 const deleteCompanySchema = Joi.object({

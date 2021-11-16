@@ -10,9 +10,9 @@ const {
 } = require('../schemas/companies.schema');
 const companiesServices = new companies();
 
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
-    const allCompanies = companiesServices.returnCompanies();
+    const allCompanies = await companiesServices.returnCompanies();
     res.status(200).json(allCompanies);
   } catch (error) {
     next(error);

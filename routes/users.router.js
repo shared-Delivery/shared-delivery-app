@@ -11,10 +11,23 @@ const {
 
 const allUser = new UsersService();
 
-router.get('/', (req, res) => {
-  const users = allUser.showUsers();
-  res.status(200).json(users);
+router.get('/', async (req, res, next) => {
+  try {
+    const users = await allUser.showUsers();
+    res.status(200).json(users);
+  } catch (error) {
+    next(error);
+  }
 });
+router.post(
+  '/',
+  validatorHandler(createUserSchema, 'body'),
+  async (req, res) => {
+    const body = req.body;
+    const newUser = await allUser.addUser(body);
+    res.status(201).json(newUser);
+  }
+);
 
 router.get(
   '/:id',
@@ -48,21 +61,11 @@ router.patch(
     try {
       const { id } = req.params;
       const body = req.body;
-      const userUpdate = await allUser.update(id, body);
+      const userUpdate = await allUser.updateUser(id, body);
       res.json(userUpdate);
     } catch (error) {
       next(error);
     }
-  }
-);
-
-router.post(
-  '/',
-  validatorHandler(createUserSchema, 'body'),
-  async (req, res) => {
-    const body = req.body;
-    const newUser = await allUser.addUser(body);
-    res.status(201).json(newUser);
   }
 );
 

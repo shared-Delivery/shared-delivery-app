@@ -1,16 +1,19 @@
 const Joi = require('joi');
-const id = Joi.string().uuid();
+const id = Joi.string();
 const name = Joi.string().min(3).max(25);
-const email = Joi.string().min(12).max(25).email();
+const email = Joi.string().min(12).max(25);
+const password = Joi.string().min(6).max(25);
 
 const createUserSchema = Joi.object({
-  name: name.required(),
+  // name: name.required(),
   email: email.required(),
+  password: password.required(),
 });
 
 const updateUserSchema = Joi.object({
-  name: name,
+  id: id,
   email: email,
+  password: password,
 });
 
 const getUserSchema = Joi.object({
