@@ -23,7 +23,9 @@ class CompaniesServices {
   }
 
   async getCompaniesId(id) {
-    const company = await models.Company.findByPk(id);
+    const company = await models.Company.findByPk(id, {
+      include: ['service'],
+    });
     if (!company) {
       throw boom.notFound('user not found');
     }

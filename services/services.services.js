@@ -10,7 +10,9 @@ class Services {
   }
 
   async getServiceId(id) {
-    const service = await models.Service.findByPk(id);
+    const service = await models.Service.findByPk(id, {
+      include: ['company'],
+    });
     if (!service) {
       throw boom.notFound('user not found');
     }

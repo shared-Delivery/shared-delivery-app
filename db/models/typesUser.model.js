@@ -1,8 +1,8 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
-// const {Service} = require('./service.model')
-const COMPANY_TABLE = 'companies';
 
-const CompanySchema = {
+const TYPE_TABLE = 'TypeUser';
+
+const TypeSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -14,7 +14,6 @@ const CompanySchema = {
     type: DataTypes.STRING,
     unique: true,
   },
-
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
@@ -29,22 +28,17 @@ const CompanySchema = {
   },
 };
 
-class Company extends Model {
-  static associate(models) {
-    this.hasMany(models.Service, {
-      as: 'service',
-      foreignKey: 'companyId',
-    });
-  }
+class UsersTypes extends Model {
+  static associate() {}
 
   static config(sequelize) {
     return {
       sequelize,
-      tableName: COMPANY_TABLE,
-      modelName: 'Company',
+      tableName: TYPE_TABLE,
+      modelName: 'UsersTypes',
       timestamp: false,
     };
   }
 }
 
-module.exports = { COMPANY_TABLE, CompanySchema, Company };
+module.exports = { TYPE_TABLE, TypeSchema, UsersTypes };

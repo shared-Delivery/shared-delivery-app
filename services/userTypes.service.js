@@ -3,9 +3,8 @@
 // const getConnection = require('../libs/postgres');
 const { models } = require('../libs/sequelize');
 const boom = require('@hapi/boom');
-const bcrypt = require('bcrypt');
 
-class UsersService {
+class Types {
   constructor() {
     // this.users = [];
     // this.generateUser();
@@ -23,7 +22,7 @@ class UsersService {
   //}
 
   async showUsers() {
-    const rta = await models.User.findAll();
+    const rta = await models.UsersTypes.findAll();
     return rta;
   }
 
@@ -33,9 +32,9 @@ class UsersService {
     //   throw boom.notFound('Product not found');
     // }
     // return user;
-    const user = await models.User.findByPk(id);
+    const user = await models.UsersTypes.findByPk(id);
     if (!user) {
-      throw boom.notFound('user not found');
+      throw boom.notFound('userType not found');
     }
     return user;
   }
@@ -46,7 +45,7 @@ class UsersService {
     //   throw boom.notFound('product not found');
     // }
     // return this.users.splice(index, 1);
-    const user = await models.User.findByPk(id);
+    const user = await models.UsersTypes.findByPk(id);
     await user.destroy();
     return { id };
   }
@@ -62,21 +61,23 @@ class UsersService {
     //   ...body,
     // };
     // return this.users[index];
-    const user = await models.User.findByPk(id);
+    const user = await models.UsersTypes.findByPk(id);
 
     user.update(body);
     return user;
   }
 
   async addUser(body) {
-    const hash = await bcrypt.hash(body.password, 10);
-    const newUser = await models.User.create({
-      ...body,
-      password: hash,
-    });
-    delete newUser.dataValues.password;
+    //   this.users.push({
+    //     id: faker.datatype.uuid(),
+    //     ...body,
+    //     isBlocked: faker.datatype.boolean(),
+    //   });
+    //   return this.users[this.users.length - 1];
+    // }
+    const newUser = await models.UsersTypes.create(body);
     return newUser;
   }
 }
 
-module.exports = UsersService;
+module.exports = Types;

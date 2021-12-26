@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 const routerApi = require('./routes/index');
+const { checkApiKey } = require('./middlewares/auth.handler');
 const {
   logErrors,
   errorHandler,
@@ -17,7 +18,7 @@ app.use(boomErrorHandler);
 
 app.use(errorHandler);
 
-app.use('/hola', express.static('./public/index.html'));
+app.use('/holatu', checkApiKey, express.static('./public/index.html'));
 
 app.listen(PORT, () => {
   console.log('Nodemon');

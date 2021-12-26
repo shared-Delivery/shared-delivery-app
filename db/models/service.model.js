@@ -1,5 +1,5 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
-
+const { COMPANY_TABLE } = require('./company.model');
 const USER_TABLE = 'services';
 
 const ServiceSchema = {
@@ -24,10 +24,29 @@ const ServiceSchema = {
     field: 'created_at',
     defaultValue: Sequelize.NOW,
   },
+  updatedAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    field: 'update_at',
+    defaultValue: Sequelize.NOW,
+  },
+  companyId: {
+    field: 'company_id',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: COMPANY_TABLE,
+      key: 'id',
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL',
+  },
 };
 
 class Service extends Model {
-  static associate() {}
+  static associate(models) {
+    this.belongsTo(models.Company, { as: 'company' });
+  }
 
   static config(sequelize) {
     return {

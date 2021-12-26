@@ -4,9 +4,14 @@
   "description": "This is an application that serves as logistical support to companies dedicated to the trade of products and services.",
   "main": "index.js",
   "scripts": {
+    "test": "mocha",
     "dev": "nodemon index.js",
     "start": "node index.js",
-    "lint": "eslint"
+    "lint": "eslint",
+    "migrations:generate": "sequelize-cli migration:generate --name",
+    "migrations:run": "sequelize-cli db:migrate",
+    "migrations:revert": "sequelize-cli db:migrate:undo",
+    "migrations:delete": "sequelize-cli db:migrate:undo:all"
   },
   "author": "",
   "license": "ISC",
@@ -15,14 +20,18 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "nodemon": "^2.0.14",
-    "prettier": "^2.4.1"
+    "prettier": "^2.4.1",
+    "sequelize-cli": "^6.3.0"
   },
   "dependencies": {
     "@hapi/boom": "^9.1.4",
+    "bcrypt": "^5.0.1",
+    "chai": "^4.3.4",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "faker": "^5.5.3",
     "joi": "^17.4.2",
+    "mocha": "^9.1.3",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.9.0"
