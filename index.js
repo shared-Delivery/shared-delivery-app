@@ -22,5 +22,5 @@ app.use(errorHandler);
 app.use('/holatu', checkApiKey, express.static('./public/index.html'));
 
 app.listen(PORT, () => {
-  console.log('Nodemon');
+  console.log('Nodemon Yuu');
 });
